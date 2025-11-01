@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Explorer: Interactive Learning</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Base Styles and Google Fonts Import */
+        :root {
+            --primary-color: #3f51b5; /* Indigo */
+            --secondary-color: #7c4dff; /* Deep Purple */
+            --accent-color: #00bcd4; /* Cyan */
+            --bg-dark: #121212;
+            --bg-light: #1e1e1e;
+            --text-light: #e0e0e0;
+            --card-bg: #282828;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            overflow-x: hidden; /* Prevents horizontal scroll from animations */
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--secondary-color);
+        }
+
+        .highlight {
+            color: var(--accent-color);
+        }
+
+        /* Global Section Styling */
+        .content-section {
+            padding: 80px 5%;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 60px;
+            text-align: center;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .info-card {
+            flex: 1 1 300px;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(124, 77, 255, 0.3);
+        }
+
+        .info-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        /* Navbar */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px var(--shadow-color);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 5%;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            color: var(--text-light); /* Ensure nav links are visible */
+        }
+
+        .nav-links a:hover {
+            background: rgba(124, 77, 255, 0.1);
+            color: var(--accent-color);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(45deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: #fff;
+            padding: 0 5%;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            position: relative;
+            overflow: hidden; /* For particle effect */
+        }
+
+        .hero-content {
+            z-index: 1; /* Ensure content is above particles */
+        }
+
+        .hero-content h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent-color);
+            color: var(--bg-dark);
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 188, 212, 0.5);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            background-color: #4dd0e1;
+        }
+
+        /* Docker Flow Animation */
+        .docker-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 60px;
+            gap: 20px;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+
+        .docker-flow h3 {
+            width: 100%;
+            margin-bottom: 30px;
+            color: var(--secondary-color);
+        }
+
+        .flow-step {
+            background: var(--card-bg);
+            padding: 20px 30px;
+            border-radius: 10px;
+            flex: 0 0 250px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+
+        .flow-step i {
+            font-size: 3em;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .flow-arrow {
+            font-size: 2em;
+            color: var(--primary-color);
+            animation: flow-pulse 2s infinite alternate;
+            align-self: flex-start;
+            margin-top: 50px;
+        }
+
+        @keyframes flow-pulse {
+            0% { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .icon-animate {
+            animation: bounce-in 1.5s ease-out forwards;
+        }
+
+        @keyframes bounce-in {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        /* Docker Layers Diagram */
+        .docker-layers {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 80px;
+            gap: 10px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .layer {
+            width: 90%;
+            background-color: #3a3a3a;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            transition: transform 0.3s ease;
+            border-left: 5px solid transparent;
+        }
+        .layer:nth-child(1) { border-color: #e91e63; } /* Base OS */
+        .layer:nth-child(2) { border-color: #9c27b0; } /* Libraries */
+        .layer:nth-child(3) { border-color: #2196f3; } /* App Code */
+        .layer:nth-child(4) { border-color: var(--accent-color); } /* Writable Layer */
+
+        .layer:hover {
+            transform: scale(1.02);
+        }
+
+        .layer-icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            color: var(--accent-color);
+        }
+
+        .layer-text {
+            flex-grow: 1;
+        }
+        .layer-label {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+        .layer-size {
+            font-size: 0.8em;
+            color: #ccc;
+        }
+
+        /* Lottie container */
+        .lottie-container {
+            width: 300px; /* Adjust size as needed */
+            height: 300px;
+            margin: 40px auto;
+            display: block;
+        }
+
+        /* CI/CD Pipeline */
+        .cicd-pipeline-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 60px auto;
+            max-width: 1200px;
+            flex-wrap: wrap;
+            position: relative; /* For progress bar */
+        }
+
+        .pipeline-stage {
+            flex: 1;
+            min-width: 150px;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.5s ease, transform 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .pipeline-stage:hover {
+            transform: translateY(-5px);
+            background-color: #333;
+            border-color: var(--accent-color);
+        }
+
+        .pipeline-stage i {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        /* Cool CSS Animation for stages */
+        @keyframes stage-activate {
+            0% { transform: scale(1); box-shadow: none; }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px var(--accent-color); }
+            100% { transform: scale(1); box-shadow: none; }
+        }
+
+        .pipeline-stage.activated {
+            animation: stage-activate 1s ease-in-out;
+            border-color: var(--accent-color);
+        }
+
+        .pipeline-arrow {
+            flex-basis: 30px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 5px;
+            animation: flow-animation 4s infinite linear;
+        }
+
+        @keyframes flow-animation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .pipeline-description {
+            text-align: center;
+            font-style: italic;
+            color: var(--secondary-color);
+            margin-top: 20px;
+        }
+
+        .run-pipeline-btn {
+            display: block;
+            margin: 40px auto 20px auto;
+            padding: 12px 30px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(124, 77, 255, 0.4);
+            font-size: 1.1em;
+        }
+        .run-pipeline-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(124, 77, 255, 0.6);
+        }
+        .run-pipeline-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .pipeline-progress-bar {
+            width: 0%;
+            height: 8px;
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+            border-radius: 4px;
+            margin-top: 20px;
+            transition: width 0.5s ease-out;
+            box-shadow: 0 0 10px var(--accent-color);
+            position: absolute;
+            bottom: -30px; /* Position below the stages */
+            left: 5%; /* Align with pipeline container width */
+            right: 5%;
+            max-width: 90%;
+        }
+
+        .stage-log-output {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.85);
+            color: #00ff00; /* Green text for logs */
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.8em;
+            white-space: pre-wrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            border-left: 3px solid var(--accent-color);
+            min-width: 200px;
+            text-align: left;
+        }
+
+
+        /* GitHub Actions */
+        .code-card {
+            flex: 1 1 500px;
+        }
+
+        .actions-icons {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .actions-icons i {
+            font-size: 3em;
+            color: var(--secondary-color);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .actions-icons i:hover {
+            color: var(--accent-color);
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .yaml-code {
+            background-color: #0d1117; /* GitHub Dark theme background */
+            color: #c9d1d9; /* Light text */
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            line-height: 1.4;
+            font-size: 0.9em;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        /* Kubernetes Architecture */
+        .kubernetes-arch {
+            margin-top: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 30px;
+            background-color: #1a1a1a;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+        .master-node, .worker-node {
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 20px 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            position: relative;
+        }
+        .master-node h4, .worker-node h4 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        .master-node i, .worker-node i {
+            font-size: 2.5em;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+        .worker-nodes-grid {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .pod {
+            position: absolute;
+            background-color: #6a1b9a; /* Deep purple */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8em;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            animation: pod-float 4s infinite ease-in-out;
+        }
+        .worker-node .pod:nth-child(1) { top: 10px; left: 10px; animation-delay: 0s; }
+        .worker-node .pod:nth-child(2) { bottom: 10px; right: 10px; animation-delay: 1s; }
+        .worker-node .pod:nth-child(3) { top: 10px; right: 10px; animation-delay: 2s; }
+        .worker-node .pod:nth-child(4) { bottom: 10px; left: 10px; animation-delay: 3s; }
+        @keyframes pod-float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* More DevOps Tools */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .tool-card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 188, 212, 0.2);
+            border-bottom-color: var(--secondary-color);
+        }
+
+        .tool-card img {
+            height: 48px;
+            width: 48px;
+            margin-bottom: 10px;
+        }
+
+        .tool-card h4 {
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .tool-card p {
+            font-size: 0.9em;
+            color: #a0a0a0;
+        }
+
+        /* Interactive Timeline Widget */
+        .timeline-widget {
+            margin-top: 80px;
+            padding: 40px 20px;
+            background: #181818;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            text-align: center;
+        }
+
+        .timeline-widget h3 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        .timeline-bar {
+            position: relative;
+            height: 5px;
+            background: var(--accent-color);
+            margin: 0 10%;
+        }
+
+        .timeline-event {
+            position: absolute;
+            transform: translateX(-50%);
+            top: -20px;
+            padding: 5px 10px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            border-radius: 5px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-event:hover {
+            transform: translateX(-50%) translateY(-5px) scale(1.1);
+            box-shadow: 0 0 10px var(--secondary-color);
+        }
+
+        .timeline-bar::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(255, 255, 255, 0.1) 5px, rgba(255, 255, 255, 0.1) 10px);
+            animation: timeline-move 30s infinite linear;
+            opacity: 0.5;
+        }
+
+        @keyframes timeline-move {
+            from { background-position: 0 0; }
+            to { background-position: -100px 0; }
+        }
+
+        /* Floating Chatbot Placeholder */
+        .chatbot-placeholder {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            height: 60px;
+            width: 60px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0, 188, 212, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            z-index: 999;
+        }
+
+        .chatbot-placeholder:hover {
+            transform: scale(1.1) rotate(5deg);
+            background: var(--secondary-color);
+        }
+
+        .chatbot-placeholder i {
+            font-size: 1.8em;
+            color: var(--bg-dark);
+        }
+
+        /* Chatbot Modal */
+        .chatbot-modal {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background-color: var(--bg-light);
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .chatbot-modal.active {
+            display: block;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .chat-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .chat-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .chat-header h4 {
+            flex-grow: 1;
+            margin: 0;
+        }
+
+        .chat-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+
+        .chat-close-btn:hover {
+            opacity: 0.8;
+        }
+
+        .chat-body {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin: 5px 0;
+        }
+
+        .bot-message {
+            background-color: var(--card-bg);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .user-message {
+            background-color: var(--primary-color);
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+            color: white;
+        }
+
+        .thinking-message {
+            background-color: var(--card-bg);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+            font-style: italic;
+            opacity: 0.8;
+            animation: thinking 1.5s infinite;
+        }
+
+        @keyframes thinking {
+            0% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.5; }
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 15px;
+            background-color: var(--card-bg);
+            gap: 10px;
+        }
+
+        #chat-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 25px;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            outline: none;
+        }
+
+        #chat-send-btn {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        #chat-send-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Quiz Widget */
+        .quiz-button {
+            display: block;
+            width: fit-content;
+            margin: 60px auto 30px auto;
+            padding: 15px 35px;
+            background: linear-gradient(90deg, var(--accent-color), #00e5ff);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.1em;
+            box-shadow: 0 5px 20px rgba(0, 188, 212, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .quiz-button:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 25px rgba(0, 188, 212, 0.7);
+        }
+
+        .quiz-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .quiz-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .quiz-content {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+            position: relative;
+            text-align: center;
+        }
+        .quiz-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .quiz-close-btn:hover {
+            color: var(--accent-color);
+        }
+        .quiz-content h3 {
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+        .quiz-question {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        .quiz-options button {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 10px;
+            background-color: #3a3a3a;
+            color: var(--text-light);
+            border: 1px solid #4a4a4a;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            text-align: left;
+        }
+        .quiz-options button:hover {
+            background-color: #4a4a4a;
+            border-color: var(--accent-color);
+        }
+        .quiz-options button.correct {
+            background-color: #28a745; /* Green for correct */
+            border-color: #28a745;
+            color: white;
+        }
+        .quiz-options button.incorrect {
+            background-color: #dc3545; /* Red for incorrect */
+            border-color: #dc3545;
+            color: white;
+        }
+        .quiz-result {
+            margin-top: 25px;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        /* Particle background for hero */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none; /* Allow interaction with content below */
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particle-float 20s infinite ease-in-out;
+        }
+
+        @keyframes particle-float {
+            0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
+            25% { opacity: 0.5; }
+            50% { transform: translateY(-50vh) translateX(20vw) scale(1.2); opacity: 0.2; }
+            75% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) translateX(40vw) scale(0.7); opacity: 0; }
+        }
+
+        .particle:nth-child(1) { top: 10%; left: 5%; width: 10px; height: 10px; animation-delay: 0s; animation-duration: 25s; }
+        .particle:nth-child(2) { top: 30%; left: 20%; width: 15px; height: 15px; animation-delay: 3s; animation-duration: 20s; }
+        .particle:nth-child(3) { top: 50%; left: 40%; width: 8px; height: 8px; animation-delay: 7s; animation-duration: 30s; }
+        .particle:nth-child(4) { top: 70%; left: 60%; width: 12px; height: 12px; animation-delay: 10s; animation-duration: 22s; }
+        .particle:nth-child(5) { top: 90%; left: 80%; width: 18px; height: 18px; animation-delay: 15s; animation-duration: 28s; }
+        .particle:nth-child(6) { top: 20%; left: 85%; width: 14px; height: 14px; animation-delay: 2s; animation-duration: 23s; }
+        .particle:nth-child(7) { top: 80%; left: 15%; width: 9px; height: 9px; animation-delay: 8s; animation-duration: 27s; }
+
+
+        /* Footer */
+        .footer {
+            background-color: var(--bg-light);
+            color: #aaa;
+            text-align: center;
+            padding: 30px 5%;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: var(--primary-color);
+            margin: 0 10px;
+            font-weight: 600;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-icons {
+            margin: 20px 0;
+        }
+
+        .social-icons a {
+            font-size: 1.5em;
+            margin: 0 15px;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--secondary-color);
+        }
+
+        .copyright {
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .section-divider {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+            margin: 0 5%;
+            opacity: 0.5;
+        }
+
+        /* Scroll-triggered Animations (Initial State) */
+        .slide-up, .fade-in {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.8s ease-out;
+        }
+
+        .slide-up {
+            transform: translateY(50px);
+        }
+
+        /* Delays for staggered effect */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+
+        /* Scroll-triggered Animations (Active State) */
+        .animated.slide-up {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .animated.fade-in {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 900px) {
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-links {
+                margin-top: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links li {
+                margin: 5px 10px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5em;
+            }
+
+            .cicd-pipeline-container {
+                flex-direction: column;
+            }
+
+            .pipeline-stage {
+                width: 80%;
+                margin: 10px 0;
+            }
+
+            .pipeline-arrow {
+                width: 5px;
+                height: 30px;
+                flex-basis: auto;
+            }
+
+            .docker-flow {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+
+            .kubernetes-arch .worker-nodes-grid {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .content-section {
+                padding: 50px 3%;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+            }
+
+            .hero-content h1 {
+                font-size: 2em;
+            }
+
+            .tool-card {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <nav class="navbar" aria-label="Main Navigation">
+            <div class="logo">DevOps<span class="highlight">.Edu</span></div>
+            <ul class="nav-links">
+                <li><a href="#docker">Docker</a></li>
+                <li><a href="#cicd">CI/CD</a></li>
+                <li><a href="#github-actions">GitHub Actions</a></li>
+                <li><a href="#kubernetes">Kubernetes</a></li>
+                <li><a href="#tools">More Tools</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="particles" aria-hidden="true">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="hero-content fade-in">
+            <h1>Accelerate Your Development with <span class="highlight">DevOps</span></h1>
+            <p>Explore the concepts, tools, and practices that bridge development and operations for faster, more reliable software delivery.</p>
+            <a href="#docker" class="cta-button" role="button">Start Learning <i class="fas fa-arrow-down"></i></a>
+        </div>
+    </section>
+
+    <section id="docker" class="content-section">
+        <h2 class="section-title slide-up">🚀 Docker Overview: Containerize Everything</h2>
+        <div class="section-container">
+            <div class="info-card slide-up delay-1">
+                <h3>What is Docker?</h3>
+                <p>Docker is a platform that uses OS-level virtualization to deliver software in packages called **containers**.</p>
+                <p>Containers are lightweight, standalone, executable packages of software that include everything needed to run it: code, runtime, system tools, system libraries, and settings.</p>
+            </div>
+
+            <div class="info-card slide-up delay-2">
+                <h3>How Containers Work</h3>
+                <p>Containers isolate the application from the host environment, ensuring it runs uniformly regardless of the underlying infrastructure.</p>
+                <p>They share the host OS kernel, making them much lighter and faster to start than traditional Virtual Machines (VMs).</p>
+            </div>
+
+            <div class="info-card slide-up delay-3">
+                <h3>Advantages of Containerization</h3>
+                <ul>
+                    <li>**Consistency:** Environment parity from dev to prod.</li>
+                    <li>**Portability:** Run anywhere.</li>
+                    <li>**Efficiency:** Low overhead, fast startup.</li>
+                    <li>**Isolation:** Security and dependency management.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="docker-flow slide-up delay-4">
+            <h3>Container Lifecycle Flow</h3>
+            <div class="flow-step">
+                <i class="fas fa-tools icon-animate"></i>
+                <h4>Build</h4>
+                <p>Create an image from a Dockerfile.</p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <i class="fas fa-ship icon-animate"></i>
+                <h4>Ship</h4>
+                <p>Push the image to a registry (e.g., Docker Hub).</p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <i class="fas fa-play icon-animate"></i>
+                <h4>Run</h4>
+                <p>Create and start a container from the image.</p>
+            </div>
+        </div>
+
+        <h3 class="section-title slide-up" style="margin-top: 80px; font-size: 1.8em;">Docker Image Layers: Efficiency Through Union File Systems</h3>
+        <div class="docker-layers slide-up delay-5">
+            <div class="layer">
+                <i class="fas fa-cube layer-icon"></i>
+                <div class="layer-text">
+                    <span class="layer-label">Container Layer (Writable)</span>
+                    <span class="layer-size">~10MB</span>
+                </div>
+            </div>
+            <div class="layer">
+                <i class="fas fa-code layer-icon"></i>
+                <div class="layer-text">
+                    <span class="layer-label">Application Code Layer</span>
+                    <span class="layer-size">~50MB</span>
+                </div>
+            </div>
+            <div class="layer">
+                <i class="fas fa-server layer-icon"></i>
+                <div class="layer-text">
+                    <span class="layer-label">Dependencies/Libraries Layer</span>
+                    <span class="layer-size">~150MB</span>
+                </div>
+            </div>
+            <div class="layer">
+                <i class="fas fa-hdd layer-icon"></i>
+                <div class="layer-text">
+                    <span class="layer-label">Base OS Layer (e.g., Alpine)</span>
+                    <span class="layer-size">~5MB</span>
+                </div>
+            </div>
+        </div>
+        <p class="fade-in" style="text-align: center; margin-top: 20px; font-style: italic;">Each layer builds on the previous one, making images efficient and reusable.</p>
+
+        <div class="lottie-container" id="lottie-docker" aria-label="Animated illustration of Docker containers" role="img"></div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section id="cicd" class="content-section">
+        <h2 class="section-title slide-up">🔄 CI/CD Pipeline: Automated Software Delivery</h2>
+        <button class="run-pipeline-btn slide-up delay-1" id="run-pipeline-btn" aria-label="Run CI/CD Pipeline Simulation">Run Pipeline Simulation</button>
+
+        <div class="cicd-pipeline-container">
+            <div class="pipeline-stage" data-info="Your code changes are committed and pushed to the repository." data-log="[GIT] Changes pushed by User.">
+                <i class="fas fa-code"></i>
+                <h4>Code (CI)</h4>
+                <div class="stage-log-output"></div>
+            </div>
+            <div class="pipeline-arrow"></div>
+            <div class="pipeline-stage" data-info="The application code is compiled, and a deployable artifact is created." data-log="[BUILD] Project compiled successfully. Artifact created: app.jar">
+                <i class="fas fa-hammer"></i>
+                <h4>Build (CI)</h4>
+                <div class="stage-log-output"></div>
+            </div>
+            <div class="pipeline-arrow"></div>
+            <div class="pipeline-stage" data-info="Automated tests (unit, integration, security) are executed to ensure quality." data-log="[TEST] Running unit tests... All 120 tests passed.">
+                <i class="fas fa-vial"></i>
+                <h4>Test (CI)</h4>
+                <div class="stage-log-output"></div>
+            </div>
+            <div class="pipeline-arrow"></div>
+            <div class="pipeline-stage" data-info="The validated artifact is automatically deployed to the target environment." data-log="[DEPLOY] Deploying artifact to production... Deployment successful!">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h4>Deploy (CD)</h4>
+                <div class="stage-log-output"></div>
+            </div>
+        </div>
+        <div class="pipeline-progress-bar" id="pipeline-progress"></div>
+        <p class="pipeline-description fade-in">Click "Run Pipeline Simulation" or hover over each stage for more!</p>
+
+        <div class="timeline-widget slide-up delay-5">
+            <h3>DevOps Flow Timeline</h3>
+            <div class="timeline-bar">
+                <div class="timeline-event" style="left: 0%;">Plan</div>
+                <div class="timeline-event" style="left: 20%;">Code</div>
+                <div class="timeline-event" style="left: 40%;">Build</div>
+                <div class="timeline-event" style="left: 60%;">Test</div>
+                <div class="timeline-event" style="left: 80%;">Release</div>
+                <div class="timeline-event" style="left: 100%;">Monitor</div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section id="github-actions" class="content-section">
+        <h2 class="section-title slide-up">🤖 GitHub Actions: Workflow Automation</h2>
+        <div class="section-container">
+            <div class="info-card slide-up delay-1" style="flex-grow: 1.5;">
+                <h3>What are GitHub Actions?</h3>
+                <p>GitHub Actions is a CI/CD platform that allows you to automate your build, test, and deployment pipeline directly within your GitHub repository.</p>
+                <p>It uses event-driven workflows defined in **YAML** files, which run on virtual machines (runners) hosted by GitHub or self-hosted.</p>
+                <div class="actions-icons">
+                    <i class="fas fa-robot" title="Automation" aria-label="Automation icon"></i>
+                    <i class="fas fa-box-open" title="Build" aria-label="Build icon"></i>
+                    <i class="fas fa-cogs" title="Deployment" aria-label="Deployment icon"></i>
+                </div>
+            </div>
+
+            <div class="info-card code-card slide-up delay-2">
+                <h3>Example Workflow YAML</h3>
+                <pre class="yaml-code" tabindex="0">
+name: CI/CD Pipeline
+on: [push]
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+                </pre>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section id="kubernetes" class="content-section">
+        <h2 class="section-title slide-up">☸️ Kubernetes: Orchestrating Containers</h2>
+        <p class="fade-in" style="text-align: center; margin-bottom: 50px;">Automate deployment, scaling, and management of containerized applications.</p>
+        <div class="kubernetes-arch slide-up delay-1">
+            <h3>Kubernetes Architecture Overview</h3>
+            <div class="master-node">
+                <i class="fas fa-brain"></i>
+                <h4>Master Node (Control Plane)</h4>
+                <p>Manages the cluster, schedules workloads, and maintains desired state.</p>
+            </div>
+            <i class="fas fa-arrow-down" style="font-size: 2em; color: var(--accent-color);"></i>
+            <div class="worker-nodes-grid">
+                <div class="worker-node">
+                    <i class="fas fa-server"></i>
+                    <h4>Worker Node 1</h4>
+                    <p>Runs your applications (Pods).</p>
+                    <div class="pod">APP</div>
+                    <div class="pod">DB</div>
+                </div>
+                <div class="worker-node">
+                    <i class="fas fa-server"></i>
+                    <h4>Worker Node 2</h4>
+                    <p>Runs your applications (Pods).</p>
+                    <div class="pod">CACHE</div>
+                    <div class="pod">APP</div>
+                </div>
+                <div class="worker-node">
+                    <i class="fas fa-server"></i>
+                    <h4>Worker Node 3</h4>
+                    <p>Runs your applications (Pods).</p>
+                    <div class="pod">API</div>
+                    <div class="pod">APP</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section id="tools" class="content-section">
+        <h2 class="section-title slide-up">🛠️ Essential DevOps Tools Ecosystem</h2>
+        <div class="tools-grid slide-up delay-1">
+            <div class="tool-card">
+                <img src="https://img.icons8.com/color/48/000000/kubernetes.png" alt="Kubernetes Logo">
+                <h4>Kubernetes (K8s)</h4>
+                <p>Container orchestration platform for automating deployment, scaling, and management.</p>
+            </div>
+            <div class="tool-card">
+                <img src="https://img.icons8.com/color/48/000000/jenkins.png" alt="Jenkins Logo">
+                <h4>Jenkins</h4>
+                <p>Open-source automation server to implement the CI/CD pipeline.</p>
+            </div>
+            <div class="tool-card">
+                <img src="https://img.icons8.com/color/48/000000/terraform.png" alt="Terraform Logo">
+                <h4>Terraform</h4>
+                <p>Infrastructure as Code (IaC) tool for provisioning infrastructure.</p>
+            </div>
+            <div class="tool-card">
+                <img src="https://img.icons8.com/color/48/000000/amazon-web-services.png" alt="AWS Logo">
+                <h4>AWS/Cloud</h4>
+                <p>Cloud providers (AWS, Azure, GCP) offer scalable DevOps services.</p>
+            </div>
+            <div class="tool-card">
+                <img src="https://img.icons8.com/color/48/000000/ansible.png" alt="Ansible Logo">
+                <h4>Ansible</h4>
+                <p>Automation engine for IT tasks like configuration management & orchestration.</p>
+            </div>
+            <div class="tool-card">
+                <img src="https://img.icons8.com/color/48/000000/prometheus.png" alt="Prometheus Logo">
+                <h4>Prometheus</h4>
+                <p>Open-source monitoring solution for event monitoring and alerting.</p>
+            </div>
+        </div>
+        <button class="quiz-button" id="open-quiz-btn" aria-controls="quiz-modal" aria-expanded="false">Test Your DevOps Knowledge!</button>
+    </section>
+
+    <div id="chatbot-modal" class="chatbot-modal" role="dialog" aria-modal="true" aria-labelledby="chat-title">
+        <div class="chat-content">
+            <div class="chat-header">
+                <i class="fas fa-dog chat-icon"></i>
+                <h4 id="chat-title">DevOps Botty 🐕</h4>
+                <button class="chat-close-btn" aria-label="Close Chat">&times;</button>
+            </div>
+            <div class="chat-body" id="chat-body">
+                <div class="message bot-message">
+                    Hello! I'm Botty, your DevOps guide. I can answer simple questions about Docker, CI/CD, or Kubernetes. Ask me anything!
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask a DevOps question..." aria-label="Chat input field">
+                <button id="chat-send-btn" aria-label="Send message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="chatbot-placeholder" id="open-chatbot-btn" role="button" aria-label="Open DevOps chatbot">
+        <i class="fas fa-dog"></i>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <p>Official Documentation:</p>
+            <a href="https://docs.docker.com/" target="_blank" rel="noopener noreferrer">Docker Docs</a> |
+            <a href="https://docs.github.com/en/actions" target="_blank" rel="noopener noreferrer">GitHub Actions Docs</a> |
+            <a href="https://www.atlassian.com/continuous-delivery/ci-cd-pipeline" target="_blank" rel="noopener noreferrer">CI/CD Info</a>
+            <a href="https://kubernetes.io/docs/home/" target="_blank" rel="noopener noreferrer">Kubernetes Docs</a>
+        </div>
+        <div class="social-icons">
+            <a href="https://github.com/Mr-fire-09" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.youtube.com/@Neeraj_Singh7" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.linkedin.com/in/neeraj-verma-09april2004/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="mailto:neerajsingh009424@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p class="copyright">Made by Neeraj Verma 💻 | © 2025 DevOps Explorer</p>
+    </footer>
+
+    <div id="quiz-modal" class="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title">
+        <div class="quiz-content">
+            <button class="quiz-close-btn" aria-label="Close quiz">&times;</button>
+            <h3 id="quiz-title">DevOps Quick Quiz</h3>
+            <div id="quiz-questions">
+                <p class="quiz-question">Loading questions...</p>
+            </div>
+            <button class="cta-button" id="submit-quiz-btn" aria-label="Submit Quiz">Submit Answers</button>
+            <p id="quiz-result" class="quiz-result" aria-live="polite"></p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lottie Animation Integration
+            const lottiePlayer = document.getElementById('lottie-docker');
+            if (lottiePlayer) {
+                // You would replace this with a real Lottie JSON URL or embed JSON directly
+                lottiePlayer.setAttribute('src', 'https://assets8.lottiefiles.com/packages/lf20_tgs70a7z.json'); // Example Lottie URL
+                lottiePlayer.setAttribute('background', 'transparent');
+                lottiePlayer.setAttribute('speed', '1');
+                lottiePlayer.setAttribute('loop', '');
+                lottiePlayer.setAttribute('autoplay', '');
+                lottiePlayer.style.width = '300px';
+                lottiePlayer.style.height = '300px';
+            }
+
+
+            // 1. Smooth Scrolling for Navbar links
+            document.querySelectorAll('.nav-links a, .cta-button').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId.startsWith('#')) {
+                        document.querySelector(targetId).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // 2. Scroll-Triggered Animations (Intersection Observer)
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of element is visible
+            };
+
+            const animateOnScroll = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                        // Optional: Stop observing once it's animated
+                        // observer.unobserve(entry.target);
+                    }
+                });
+            };
+
+            const observer = new IntersectionObserver(animateOnScroll, observerOptions);
+
+            document.querySelectorAll('.slide-up, .fade-in').forEach(element => {
+                observer.observe(element);
+            });
+
+            // 3. CI/CD Pipeline Interactive Animation and Hover Effect + Run Simulation
+            const stages = document.querySelectorAll('.pipeline-stage');
+            const runPipelineBtn = document.getElementById('run-pipeline-btn');
+            const pipelineProgressBar = document.getElementById('pipeline-progress');
+            let isPipelineRunning = false;
+
+            // Tooltip for general stage info
+            const stageTooltip = document.createElement('div');
+            stageTooltip.className = 'stage-tooltip';
+            document.body.appendChild(stageTooltip);
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .stage-tooltip {
+                    position: absolute;
+                    background-color: var(--secondary-color);
+                    color: white;
+                    padding: 8px 15px;
+                    border-radius: 5px;
+                    pointer-events: none;
+                    opacity: 0;
+                    transition: opacity 0.3s ease, transform 0.1s ease;
+                    z-index: 1001;
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+                    max-width: 250px;
+                    font-size: 0.9em;
+                }
+            `;
+            document.head.appendChild(style);
+
+            stages.forEach((stage) => {
+                const infoText = stage.getAttribute('data-info');
+                const logOutput = stage.querySelector('.stage-log-output');
+
+                stage.addEventListener('mouseenter', (e) => {
+                    stage.classList.add('hovered'); // Add a class for specific hover styles
+                    stageTooltip.textContent = infoText;
+                    stageTooltip.style.opacity = '1';
+                    stageTooltip.style.left = e.pageX + 15 + 'px';
+                    stageTooltip.style.top = e.pageY - 15 + 'px';
+                });
+
+                stage.addEventListener('mousemove', (e) => {
+                    stageTooltip.style.left = e.pageX + 15 + 'px';
+                    stageTooltip.style.top = e.pageY - 15 + 'px';
+                });
+
+                stage.addEventListener('mouseleave', () => {
+                    stage.classList.remove('hovered');
+                    stageTooltip.style.opacity = '0';
+                });
+            });
+
+            runPipelineBtn.addEventListener('click', () => {
+                if (isPipelineRunning) return;
+
+                isPipelineRunning = true;
+                runPipelineBtn.disabled = true;
+                pipelineProgressBar.style.width = '0%';
+
+                let currentStageIndex = 0;
+                const stageInterval = 1500; // Time for each stage animation
+
+                const runStage = () => {
+                    if (currentStageIndex < stages.length) {
+                        const stage = stages[currentStageIndex];
+                        const logMessage = stage.getAttribute('data-log');
+                        const logOutputDiv = stage.querySelector('.stage-log-output');
+
+                        // Deactivate previous stage's log if any
+                        if (currentStageIndex > 0) {
+                            stages[currentStageIndex - 1].querySelector('.stage-log-output').style.opacity = '0';
+                            stages[currentStageIndex - 1].querySelector('.stage-log-output').style.visibility = 'hidden';
+                        }
+
+                        // Activate current stage
+                        stage.classList.add('activated');
+                        logOutputDiv.textContent = logMessage;
+                        logOutputDiv.style.opacity = '1';
+                        logOutputDiv.style.visibility = 'visible';
+                        logOutputDiv.style.left = '50%';
+                        logOutputDiv.style.transform = 'translateX(-50%) translateY(-100%)'; // Position above stage
+
+                        // Update progress bar
+                        const progress = ((currentStageIndex + 1) / stages.length) * 100;
+                        pipelineProgressBar.style.width = `${progress}%`;
+
+                        currentStageIndex++;
+                        setTimeout(() => {
+                            stage.classList.remove('activated'); // Deactivate animation after a short delay
+                            runStage();
+                        }, stageInterval);
+                    } else {
+                        // Pipeline finished
+                        setTimeout(() => {
+                            pipelineProgressBar.style.width = '100%';
+                            isPipelineRunning = false;
+                            runPipelineBtn.disabled = false;
+                            // Hide last log output
+                            stages[stages.length - 1].querySelector('.stage-log-output').style.opacity = '0';
+                            stages[stages.length - 1].querySelector('.stage-log-output').style.visibility = 'hidden';
+                            alert('CI/CD Pipeline Simulation Complete!');
+                        }, stageInterval);
+                    }
+                };
+
+                runStage();
+            });
+
+            // 4. More subtle hover animation for tool cards (already implemented)
+            document.querySelectorAll('.tool-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // 5. Quiz Widget Logic
+            const quizButton = document.getElementById('open-quiz-btn');
+            const quizModal = document.getElementById('quiz-modal');
+            const quizCloseBtn = quizModal.querySelector('.quiz-close-btn');
+            const quizQuestionsContainer = document.getElementById('quiz-questions');
+            const submitQuizBtn = document.getElementById('submit-quiz-btn');
+            const quizResult = document.getElementById('quiz-result');
+
+            const quizData = [
+                {
+                    question: "What is the primary benefit of Docker containers?",
+                    options: [
+                        "They are faster than virtual machines to boot.",
+                        "They provide strong isolation without sharing OS kernel.",
+                        "They ensure environment consistency from development to production.",
+                        "They eliminate the need for host operating systems."
+                    ],
+                    answer: 2 // Index of the correct option (0-indexed)
+                },
+                {
+                    question: "Which of these is NOT typically a stage in a CI/CD pipeline?",
+                    options: [
+                        "Code",
+                        "Design",
+                        "Test",
+                        "Deploy"
+                    ],
+                    answer: 1
+                },
+                {
+                    question: "What are GitHub Actions primarily used for?",
+                    options: [
+                        "Version control and code hosting.",
+                        "Project management and issue tracking.",
+                        "Automating software workflows directly in GitHub.",
+                        "Cloud infrastructure provisioning."
+                    ],
+                    answer: 2
+                },
+                {
+                    question: "What does Kubernetes primarily orchestrate?",
+                    options: [
+                        "Virtual Machines",
+                        "Databases",
+                        "Containers",
+                        "Serverless Functions"
+                    ],
+                    answer: 2
+                }
+            ];
+
+            let selectedAnswers = new Array(quizData.length).fill(null);
+
+            function renderQuiz() {
+                quizQuestionsContainer.innerHTML = ''; // Clear previous questions
+                quizData.forEach((q, qIndex) => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'quiz-question-block';
+                    questionDiv.innerHTML = `<p class="quiz-question">${qIndex + 1}. ${q.question}</p>`;
+
+                    const optionsDiv = document.createElement('div');
+                    optionsDiv.className = 'quiz-options';
+
+                    q.options.forEach((option, oIndex) => {
+                        const optionBtn = document.createElement('button');
+                        optionBtn.textContent = option;
+                        optionBtn.setAttribute('data-q-index', qIndex);
+                        optionBtn.setAttribute('data-o-index', oIndex);
+                        optionBtn.setAttribute('role', 'radio');
+                        optionBtn.setAttribute('aria-checked', oIndex === selectedAnswers[qIndex]);
+
+                        if (oIndex === selectedAnswers[qIndex]) {
+                            optionBtn.classList.add('selected');
+                        }
+
+                        optionBtn.addEventListener('click', () => {
+                            // Deselect previous option for this question
+                            optionsDiv.querySelectorAll('button').forEach(btn => {
+                                btn.classList.remove('selected');
+                                btn.setAttribute('aria-checked', 'false');
+                            });
+                            // Select current option
+                            optionBtn.classList.add('selected');
+                            optionBtn.setAttribute('aria-checked', 'true');
+                            selectedAnswers[qIndex] = oIndex;
+                        });
+                        optionsDiv.appendChild(optionBtn);
+                    });
+                    questionDiv.appendChild(optionsDiv);
+                    quizQuestionsContainer.appendChild(questionDiv);
+                });
+                quizResult.textContent = ''; // Clear previous results
+                submitQuizBtn.style.display = 'block'; // Show submit button
+            }
+
+            function showQuizModal() {
+                quizModal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling background
+                renderQuiz();
+                quizModal.focus(); // Focus the modal for accessibility
+                quizButton.setAttribute('aria-expanded', 'true');
+            }
+
+            function hideQuizModal() {
+                quizModal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+                selectedAnswers.fill(null); // Reset answers
+                quizButton.setAttribute('aria-expanded', 'false');
+            }
+
+            function submitQuiz() {
+                let score = 0;
+                quizQuestionsContainer.querySelectorAll('.quiz-question-block').forEach((qBlock, qIndex) => {
+                    const options = qBlock.querySelectorAll('.quiz-options button');
+                    options.forEach((optionBtn, oIndex) => {
+                        optionBtn.disabled = true; // Disable buttons after submission
+                        if (oIndex === quizData[qIndex].answer) {
+                            optionBtn.classList.add('correct');
+                        }
+                        if (oIndex === selectedAnswers[qIndex] && oIndex !== quizData[qIndex].answer) {
+                            optionBtn.classList.add('incorrect');
+                        }
+                    });
+
+                    if (selectedAnswers[qIndex] === quizData[qIndex].answer) {
+                        score++;
+                    }
+                });
+
+                quizResult.textContent = `You scored ${score} out of ${quizData.length}!`;
+                submitQuizBtn.style.display = 'none'; // Hide submit button after scoring
+            }
+
+            // Chatbot Functionality
+            const openChatbotBtn = document.getElementById('open-chatbot-btn');
+            const chatbotModal = document.getElementById('chatbot-modal');
+            const chatCloseBtn = chatbotModal.querySelector('.chat-close-btn');
+            const chatBody = document.getElementById('chat-body');
+            const chatInput = document.getElementById('chat-input');
+            const chatSendBtn = document.getElementById('chat-send-btn');
+
+            function toggleChatbot() {
+                chatbotModal.classList.toggle('active');
+                if (chatbotModal.classList.contains('active')) {
+                    chatInput.focus();
+                }
+            }
+
+            openChatbotBtn.addEventListener('click', toggleChatbot);
+            chatCloseBtn.addEventListener('click', toggleChatbot);
+
+            function addMessage(text, sender) {
+                const msgDiv = document.createElement('div');
+                msgDiv.classList.add('message');
+                msgDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+                msgDiv.textContent = text;
+                chatBody.appendChild(msgDiv);
+                chatBody.scrollTop = chatBody.scrollHeight; // Auto-scroll to bottom
+                return msgDiv; // Return the element for dynamic updates (like "thinking")
+            }
+
+            // Encrypt API key (basic encryption - not for production use)
+            function encryptApiKey(key) {
+                return btoa(key.split('').reverse().join('')); // Basic obfuscation
+            }
+
+            function decryptApiKey(encryptedKey) {
+                return atob(encryptedKey).split('').reverse().join('');
+            }
+
+            // Store encrypted API key
+            const encryptedApiKey = encryptApiKey('AIzaSyAbDGcjmDytNze-G9UQe4sSr9u-GfG0er4');
+
+            async function getBotResponse(question) {
+                try {
+                    const apiKey = decryptApiKey(encryptedApiKey);
+                    const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateText';
+                    
+                    const response = await fetch(`${endpoint}?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            contents: [{
+                                parts: [{
+                                    text: `You are a DevOps expert chatbot named Botty. 
+                                          Provide a concise, friendly response about: ${question}
+                                          Focus on DevOps topics like Docker, Kubernetes, CI/CD, and cloud technologies.
+                                          Keep responses under 150 words and use simple language.`
+                                }]
+                            }]
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('API request failed');
+                    }
+
+                    const data = await response.json();
+                    return data.candidates[0].content.parts[0].text;
+                } catch (error) {
+                    console.error('API Error:', error);
+                    return "I apologize, but I'm having trouble connecting to my knowledge base right now. Please try asking about Docker, Kubernetes, or CI/CD, and I'll provide my standard response.";
+                }
+            }
+
+            function getFallbackResponse(question) {
+                const lowerCaseQ = question.toLowerCase();
+                if (lowerCaseQ.includes('docker') || lowerCaseQ.includes('container')) {
+                    return "Docker allows you to package an application with all its dependencies into a container. This ensures it runs the same way everywhere! It uses OS virtualization, making it very lightweight.";
+                } else if (lowerCaseQ.includes('ci/cd') || lowerCaseQ.includes('pipeline')) {
+                    return "CI/CD stands for Continuous Integration / Continuous Delivery. It's an automated process that takes code changes from commit to deployment, ensuring faster, more reliable releases.";
+                } else if (lowerCaseQ.includes('kubernetes') || lowerCaseQ.includes('k8s')) {
+                    return "Kubernetes is a container orchestration system that automates the deployment, scaling, and management of containerized applications.";
+                } else if (lowerCaseQ.includes('hello') || lowerCaseQ.includes('hi')) {
+                    return "Woof! (That means hello in dog-speak). What DevOps topic can I explain for you?";
+                }
+                return "I'm here to help with DevOps topics! Feel free to ask about Docker, Kubernetes, CI/CD pipelines, or other DevOps practices.";
+            }
+
+            async function sendMessage() {
+                const question = chatInput.value.trim();
+                if (!question) return;
+
+                addMessage(question, 'user');
+                chatInput.value = ''; // Clear input
+
+                // Show thinking indicator
+                const thinkingMsg = addMessage('', 'thinking-message');
+                thinkingMsg.textContent = 'Botty is thinking';
+
+                try {
+                    // Try to get response from API
+                    const botAnswer = await getBotResponse(question);
+                    chatBody.removeChild(thinkingMsg);
+                    addMessage(botAnswer, 'bot');
+                } catch (error) {
+                    // Fallback to local responses if API fails
+                    console.error('Error getting bot response:', error);
+                    chatBody.removeChild(thinkingMsg);
+                    const fallbackAnswer = getFallbackResponse(question);
+                    addMessage(fallbackAnswer, 'bot');
+                }
+            }
+
+            chatSendBtn.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            quizButton.addEventListener('click', showQuizModal);
+            quizCloseBtn.addEventListener('click', hideQuizModal);
+            submitQuizBtn.addEventListener('click', submitQuiz);
+
+            // Close modal if escape key is pressed
+            quizModal.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    hideQuizModal();
+                }
+            });
+
+            // Prevent closing when clicking inside the content but not on close button
+            quizModal.addEventListener('click', (e) => {
+                if (e.target === quizModal) {
+                    hideQuizModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
