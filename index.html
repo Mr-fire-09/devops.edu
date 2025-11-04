@@ -17,6 +17,7 @@
             --bg-light: #1e1e1e;
             --text-light: #e0e0e0;
             --card-bg: #282828;
+            --border-color: rgba(255, 255, 255, 0.1);
             --shadow-color: rgba(0, 0, 0, 0.5);
         }
 
@@ -54,7 +55,7 @@
             padding: 80px 5%;
             min-height: 100vh;
             background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .section-title {
@@ -469,6 +470,42 @@
             border-left: 5px solid var(--accent-color);
         }
 
+        /* GitHub Actions Flow Diagram */
+        .actions-flow-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .actions-flow-item {
+            background: var(--card-bg);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+        }
+        .actions-flow-item i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        .actions-flow-arrow {
+            font-size: 1.5em;
+            color: var(--accent-color);
+        }
+
+        .k8s-component {
+            background: #333;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin: 5px 5px 5px 0;
+            display: inline-block;
+            font-size: 0.9em;
+            border-left: 2px solid var(--secondary-color);
+        }
+
+
         /* Kubernetes Architecture */
         .kubernetes-arch {
             margin-top: 80px;
@@ -573,6 +610,172 @@
         .tool-card p {
             font-size: 0.9em;
             color: #a0a0a0;
+        }
+
+        /* Learning Resources Section */
+        .resource-card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 188, 212, 0.25);
+        }
+        .resource-card i {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .resource-card h4 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+        .resource-card p {
+            font-size: 0.9em;
+            color: #b0b0b0;
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+        .resource-card a.cta-button {
+            width: 100%;
+            padding: 10px 20px;
+            font-size: 0.9em;
+        }
+
+        /* Cloud Cost Estimator */
+        .cost-estimator {
+            background-color: var(--card-bg);
+            padding: 30px 40px;
+            border-radius: 15px;
+            max-width: 700px;
+            margin: 40px auto;
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+        .estimator-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .estimator-row label {
+            font-weight: 600;
+        }
+        .estimator-row input[type="range"] {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+        .estimator-output {
+            font-weight: 700;
+            color: var(--accent-color);
+            min-width: 50px;
+        }
+        .total-cost {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+
+        /* --- Linux Command Simulator (New) --- */
+        .linux-simulator {
+            background-color: #0d1117; /* GitHub Dark */
+            border-radius: 10px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            max-width: 800px;
+            margin: 40px auto;
+            border: 1px solid var(--border-color);
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        .terminal-header {
+            background-color: #333;
+            padding: 10px 15px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .terminal-header::before, .terminal-header::after {
+            content: '';
+            display: block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .terminal-header::before { background-color: #ff5f56; } /* Red */
+        .terminal-header::after { background-color: #ffbd2e; } /* Yellow */
+        .terminal-header span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #27c93f; /* Green */
+        }
+        .terminal-body {
+            padding: 20px;
+            height: 300px;
+            overflow-y: auto;
+            color: #c9d1d9;
+        }
+        .terminal-body pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .terminal-input-line {
+            display: flex;
+        }
+        .terminal-prompt {
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-right: 8px;
+        }
+        #terminal-input {
+            background: none;
+            border: none;
+            color: #c9d1d9;
+            flex-grow: 1;
+            outline: none;
+            font-family: inherit;
+            font-size: 1em;
+        }
+
+        /* --- Video Hub Section (New) --- */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        .video-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+        .video-embed {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+        }
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-card h4 {
+            padding: 15px;
+            font-size: 1.1em;
+            color: var(--accent-color);
         }
 
         /* Interactive Timeline Widget */
@@ -905,6 +1108,10 @@
             border-color: #dc3545;
             color: white;
         }
+        .quiz-options button.selected {
+             border-color: var(--primary-color);
+             box-shadow: 0 0 5px var(--primary-color);
+        }
         .quiz-result {
             margin-top: 25px;
             font-size: 1.2em;
@@ -952,7 +1159,7 @@
         .footer {
             background-color: var(--bg-light);
             color: #aaa;
-            text-align: center;
+            text-align: left;
             padding: 30px 5%;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
@@ -973,6 +1180,7 @@
 
         .social-icons {
             margin: 20px 0;
+            text-align: center;
         }
 
         .social-icons a {
@@ -988,6 +1196,7 @@
 
         .copyright {
             font-size: 0.9em;
+            text-align: center;
             margin-top: 10px;
         }
 
@@ -997,6 +1206,29 @@
             background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
             margin: 0 5%;
             opacity: 0.5;
+        }
+
+        /* Back to Top Button */
+        #back-to-top-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent-color);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+            z-index: 998; /* Below chatbot icon */
         }
 
         /* Scroll-triggered Animations (Initial State) */
@@ -1096,10 +1328,188 @@
                 flex: 1 1 100%;
             }
         }
+
+        /* --- Welcome Screen Styles (New Addition) --- */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, var(--bg-dark), var(--bg-light), var(--primary-color), var(--secondary-color));
+            background-size: 400% 400%;
+            animation: gradientBG 20s ease infinite;
+            z-index: 10000; /* Highest layer */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            backdrop-filter: blur(10px);
+            perspective: 1000px; /* For 3D tilt effect */
+        }
+
+        .welcome-content {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+            background: var(--card-bg);
+            background: rgba(40, 40, 40, 0.7); /* Glassmorphism effect */
+            border-radius: 20px;
+            box-shadow: 0 10px 60px rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--border-color);
+            transition: transform 0.1s ease-out; /* For tilt effect */
+        }
+
+        .welcome-content h2 {
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Typing cursor for h2 */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 2.5em;
+            background-color: var(--accent-color);
+            animation: blink 0.7s infinite;
+            vertical-align: bottom;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+
+        .welcome-content p {
+            font-size: 1.2em;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        #start-journey-btn {
+            animation: button-glow 2.5s infinite ease-in-out;
+        }
+
+        @keyframes button-glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(124, 77, 255, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 35px rgba(124, 77, 255, 0.8);
+                transform: scale(1.02);
+            }
+        }
+
+        /* New styles for Google Login */
+        .welcome-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+            color: #777;
+        }
+        .welcome-divider::before,
+        .welcome-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #444;
+        }
+        .welcome-divider span {
+            padding: 0 10px;
+        }
+
+        .google-login-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 25px;
+            background-color: #fff;
+            color: #444;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            font-size: 1em;
+        }
+        .google-login-button:hover {
+            background-color: #f5f5f5;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .google-login-button i {
+            margin-right: 10px;
+            color: #DB4437; /* Google Red */
+            font-size: 1.2em;
+        }
+
+        /* Staggered Animation for welcome content */
+        .welcome-content > * {
+            animation: fadeInUp 0.7s backwards;
+        }
+        .welcome-content .fas.fa-server { animation-delay: 0.2s; animation-name: icon-float, fadeInUp; animation-duration: 3s, 0.7s; animation-iteration-count: infinite, 1; }
+        .welcome-content h2 { animation-delay: 0.4s; }
+        .welcome-content p { animation-delay: 0.6s; }
+        #start-journey-btn { animation-delay: 0.8s; }
+        .welcome-divider { animation-delay: 1.0s; }
+        #google-login-btn { animation-delay: 1.1s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes icon-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+
+        /* Background Gradient Animation */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Utility to hide the screen completely */
+        .hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
     </style>
 </head>
 <body>
-
+    <div id="welcome-screen" class="welcome-overlay hidden">
+        <div class="particles" aria-hidden="true" id="welcome-particles">
+            <!-- Particles will be generated by JS -->
+        </div>
+        <div class="welcome-content">
+            <i class="fas fa-server" style="font-size: 4em; color: var(--primary-color); margin-bottom: 20px;"></i>
+            <h2 id="welcome-title"></h2>
+            <p>Your interactive journey to master **Docker, CI/CD, and Kubernetes** begins here. Click below to dive into the pipeline automation and container orchestration world!</p>
+            <button id="start-journey-btn" class="cta-button" style="color: white; background-color: var(--secondary-color);">
+                Start Your DevOps Journey <i class="fas fa-rocket"></i>
+            </button>
+            <div class="welcome-divider">
+                <span>or</span>
+            </div>
+            <button id="google-login-btn" class="google-login-button">
+                <i class="fab fa-google"></i> Sign in with Google
+            </button>
+        </div>
+    </div>
     <header class="header">
         <nav class="navbar" aria-label="Main Navigation">
             <div class="logo">DevOps<span class="highlight">.Edu</span></div>
@@ -1109,6 +1519,8 @@
                 <li><a href="#github-actions">GitHub Actions</a></li>
                 <li><a href="#kubernetes">Kubernetes</a></li>
                 <li><a href="#tools">More Tools</a></li>
+                <li><a href="#linux">Linux</a></li>
+                <li><a href="#resources">Resources</a></li>
             </ul>
         </nav>
     </header>
@@ -1274,6 +1686,13 @@
                     <i class="fas fa-box-open" title="Build" aria-label="Build icon"></i>
                     <i class="fas fa-cogs" title="Deployment" aria-label="Deployment icon"></i>
                 </div>
+                <div class="actions-flow-diagram">
+                    <div class="actions-flow-item"><i class="fas fa-bell"></i>Event</div>
+                    <div class="actions-flow-arrow">→</div>
+                    <div class="actions-flow-item"><i class="fas fa-tasks"></i>Job</div>
+                    <div class="actions-flow-arrow">→</div>
+                    <div class="actions-flow-item"><i class="fas fa-running"></i>Step</div>
+                </div>
             </div>
 
             <div class="info-card code-card slide-up delay-2">
@@ -1310,7 +1729,12 @@ jobs:
             <div class="master-node">
                 <i class="fas fa-brain"></i>
                 <h4>Master Node (Control Plane)</h4>
-                <p>Manages the cluster, schedules workloads, and maintains desired state.</p>
+                <p>Manages the cluster state. Key components include:</p>
+                <div>
+                    <span class="k8s-component">API Server</span>
+                    <span class="k8s-component">etcd</span>
+                    <span class="k8s-component">Scheduler</span>
+                </div>
             </div>
             <i class="fas fa-arrow-down" style="font-size: 2em; color: var(--accent-color);"></i>
             <div class="worker-nodes-grid">
@@ -1378,6 +1802,116 @@ jobs:
         <button class="quiz-button" id="open-quiz-btn" aria-controls="quiz-modal" aria-expanded="false">Test Your DevOps Knowledge!</button>
     </section>
 
+    <hr class="section-divider">
+
+    <section id="resources" class="content-section">
+        <h2 class="section-title slide-up">📚 Learning Resources & Next Steps</h2>
+        <div class="tools-grid slide-up delay-1">
+            <div class="resource-card">
+                <i class="fas fa-book-open"></i>
+                <h4>Awesome DevOps</h4>
+                <p>A curated list of awesome DevOps platforms, tools, practices, and resources. A must-have bookmark.</p>
+                <a href="https://github.com/bregman-arie/awesome-devops" target="_blank" rel="noopener noreferrer" class="cta-button">Explore List</a>
+            </div>
+            <div class="resource-card">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <h4>KodeKloud</h4>
+                <p>Hands-on labs and courses for DevOps tools like Docker, Kubernetes, and Ansible. Learn by doing.</p>
+                <a href="https://kodekloud.com/" target="_blank" rel="noopener noreferrer" class="cta-button">Visit Labs</a>
+            </div>
+            <div class="resource-card">
+                <i class="fas fa-road"></i>
+                <h4>DevOps Roadmap</h4>
+                <p>An interactive roadmap showing the paths you can take to become a DevOps engineer.</p>
+                <a href="https://roadmap.sh/devops" target="_blank" rel="noopener noreferrer" class="cta-button">View Roadmap</a>
+            </div>
+            <div class="resource-card">
+                <i class="fas fa-award"></i>
+                <h4>Certifications (CKA/DCA)</h4>
+                <p>Validate your skills with industry-recognized certifications like Certified Kubernetes Administrator (CKA).</p>
+                <a href="https://www.cncf.io/certification/cka/" target="_blank" rel="noopener noreferrer" class="cta-button">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section id="cost-estimator" class="content-section">
+        <h2 class="section-title slide-up">💰 Cloud Cost Estimator (Demo)</h2>
+        <p class="fade-in" style="text-align: center; margin-bottom: 40px;">Estimate monthly costs for a basic cloud setup. (For educational purposes only)</p>
+        <div class="cost-estimator slide-up delay-1">
+            <div class="estimator-row">
+                <label for="servers">Servers (Instances):</label>
+                <input type="range" id="servers" min="1" max="10" value="2">
+                <span id="servers-output" class="estimator-output">2</span>
+            </div>
+            <div class="estimator-row">
+                <label for="storage">Storage (GB):</label>
+                <input type="range" id="storage" min="20" max="500" value="50" step="10">
+                <span id="storage-output" class="estimator-output">50 GB</span>
+            </div>
+            <div class="estimator-row">
+                <label for="bandwidth">Bandwidth (GB):</label>
+                <input type="range" id="bandwidth" min="100" max="2000" value="500" step="100">
+                <span id="bandwidth-output" class="estimator-output">500 GB</span>
+            </div>
+            <div class="total-cost">Estimated Monthly Cost: <span id="total-cost-output">$0.00</span></div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section id="linux" class="content-section">
+        <h2 class="section-title slide-up">🐧 Linux & Shell Fundamentals</h2>
+        <div class="section-container">
+            <div class="info-card slide-up delay-1">
+                <h3>Why Linux for DevOps?</h3>
+                <p>The vast majority of cloud servers and containers run on Linux. Mastering the command line is a non-negotiable skill for any DevOps professional.</p>
+                <ul>
+                    <li><strong>Automation:</strong> Shell scripting is key to automating repetitive tasks.</li>
+                    <li><strong>Control:</strong> Direct, granular control over system resources.</li>
+                    <li><strong>Ecosystem:</strong> Most DevOps tools are built for or run best on Linux.</li>
+                </ul>
+            </div>
+            <div class="info-card slide-up delay-2">
+                <h3>Interactive Command Simulator</h3>
+                <p>Try some basic commands below! Type a command and press Enter. Try `help` to see available commands.</p>
+                <div class="linux-simulator">
+                    <div class="terminal-header"><span></span></div>
+                    <div class="terminal-body" id="terminal-body">
+                        <pre>Welcome to the Linux simulator!
+Current directory: /home/devops
+Type 'help' for a list of commands.</pre>
+                        <div class="terminal-input-line">
+                            <span class="terminal-prompt">user@devops:~$</span>
+                            <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" aria-label="Linux command input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section id="video-hub" class="content-section">
+        <h2 class="section-title slide-up">🎬 Video Learning Hub</h2>
+        <div class="video-grid slide-up delay-1">
+            <div class="video-card">
+                <div class="video-embed"><iframe src="https://www.youtube.com/embed/J_Q3_pgv43k" title="What is DevOps?" allowfullscreen></iframe></div>
+                <h4>What is DevOps? - In Simple English</h4>
+            </div>
+            <div class="video-card">
+                <div class="video-embed"><iframe src="https://www.youtube.com/embed/Gjnup-PuquQ" title="Docker in 100 Seconds" allowfullscreen></iframe></div>
+                <h4>Docker in 100 Seconds</h4>
+            </div>
+            <div class="video-card">
+                <div class="video-embed"><iframe src="https://www.youtube.com/embed/PziYfl8q_wE" title="Kubernetes in 100 Seconds" allowfullscreen></iframe></div>
+                <h4>Kubernetes in 100 Seconds</h4>
+            </div>
+        </div>
+    </section>
+
     <div id="chatbot-modal" class="chatbot-modal" role="dialog" aria-modal="true" aria-labelledby="chat-title">
         <div class="chat-content">
             <div class="chat-header">
@@ -1403,12 +1937,16 @@ jobs:
         <i class="fas fa-dog"></i>
     </div>
 
+    <button id="back-to-top-btn" title="Go to top" aria-label="Go to top"><i class="fas fa-arrow-up"></i></button>
+
     <footer class="footer">
         <div class="footer-links">
-            <p>Official Documentation:</p>
-            <a href="https://docs.docker.com/" target="_blank" rel="noopener noreferrer">Docker Docs</a> |
-            <a href="https://docs.github.com/en/actions" target="_blank" rel="noopener noreferrer">GitHub Actions Docs</a> |
-            <a href="https://www.atlassian.com/continuous-delivery/ci-cd-pipeline" target="_blank" rel="noopener noreferrer">CI/CD Info</a>
+            <h4>Quick Links</h4>
+            <a href="#docker">Docker</a> |
+            <a href="#cicd">CI/CD</a> |
+            <a href="#kubernetes">Kubernetes</a> |
+            <a href="#resources">Resources</a> |
+            <a href="#video-hub">Videos</a> |
             <a href="https://kubernetes.io/docs/home/" target="_blank" rel="noopener noreferrer">Kubernetes Docs</a>
         </div>
         <div class="social-icons">
@@ -1435,6 +1973,108 @@ jobs:
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+
+            /* --- Welcome Screen Logic (New Addition) --- */
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const startJourneyBtn = document.getElementById('start-journey-btn');
+            const googleLoginBtn = document.getElementById('google-login-btn');
+
+            // --- Enhanced Welcome Screen Animations ---
+
+            // 1. Typing effect for the title
+            const welcomeTitle = document.getElementById('welcome-title');
+            const titleText = 'Welcome to DevOps <span class="highlight">Explorer</span>';
+            let charIndex = 0;
+            welcomeTitle.innerHTML = '<span class="typing-cursor"></span>';
+
+            function type() {
+                if (charIndex < titleText.length) {
+                    // Handle HTML tags
+                    if (titleText[charIndex] === '<') {
+                        const tagEnd = titleText.indexOf('>', charIndex);
+                        welcomeTitle.innerHTML = titleText.substring(0, tagEnd + 1) + '<span class="typing-cursor"></span>';
+                        charIndex = tagEnd + 1;
+                    } else {
+                        welcomeTitle.innerHTML = titleText.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
+                        charIndex++;
+                    }
+                    setTimeout(type, 70); // Typing speed
+                } else {
+                    // Remove cursor after typing is done
+                    welcomeTitle.innerHTML = titleText;
+                }
+            }
+
+            // 2. 3D Tilt effect for the welcome card
+            const welcomeContent = document.querySelector('.welcome-content');
+            welcomeScreen.addEventListener('mousemove', (e) => {
+                const { clientX, clientY } = e;
+                const { offsetWidth, offsetHeight } = welcomeScreen;
+                const x = (clientX / offsetWidth - 0.5) * 30; // Tilt range
+                const y = (clientY / offsetHeight - 0.5) * -30; // Invert Y for natural feel
+                welcomeContent.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+            });
+
+            // 3. Generate particles for the welcome screen
+            const welcomeParticlesContainer = document.getElementById('welcome-particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.width = `${Math.random() * 5 + 2}px`;
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = `${Math.random() * 20}s`;
+                particle.style.animationDuration = `${Math.random() * 15 + 10}s`;
+                welcomeParticlesContainer.appendChild(particle);
+            }
+            // --- End Enhanced Animations ---
+
+            // Show the welcome screen initially (remove 'hidden' class)
+            welcomeScreen.classList.remove('hidden');
+
+            // Function to hide the welcome screen on button click
+            startJourneyBtn.addEventListener('click', () => {
+                // Start fade-out animation
+                welcomeScreen.style.opacity = '0';
+                // Remove the element from the DOM flow after the animation
+                setTimeout(() => {
+                    welcomeScreen.classList.add('hidden');
+                    type(); // Start typing animation when screen is shown
+                }, 500);
+            });
+
+            // Placeholder for Google Login
+            googleLoginBtn.addEventListener('click', () => {
+                console.log('Google Sign-In button clicked. Initiating OAuth flow...');
+                alert('Google Sign-In is a demo feature. A full implementation requires a backend service.');
+                // In a real app, you would redirect to Google's OAuth endpoint here.
+            });
+
+            setTimeout(type, 800); // Start typing after initial animations
+            /* --- End Welcome Screen Logic --- */
+
+            /* --- Back to Top Button Logic (New) --- */
+            const backToTopBtn = document.getElementById('back-to-top-btn');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopBtn.style.opacity = '1';
+                    backToTopBtn.style.visibility = 'visible';
+                    backTotopBtn.style.transform = 'translateY(0)';
+                } else {
+                    backToTopBtn.style.opacity = '0';
+                    backToTopBtn.style.visibility = 'hidden';
+                    backToTopBtn.style.transform = 'translateY(20px)';
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            /* --- End Back to Top Button Logic --- */
+
+
             // Lottie Animation Integration
             const lottiePlayer = document.getElementById('lottie-docker');
             if (lottiePlayer) {
@@ -1450,13 +2090,15 @@ jobs:
 
 
             // 1. Smooth Scrolling for Navbar links
-            document.querySelectorAll('.nav-links a, .cta-button').forEach(anchor => {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
                     const targetId = this.getAttribute('href');
-                    if (targetId.startsWith('#')) {
+                    // Check if it's a real anchor link and not just '#'
+                    if (targetId && targetId.length > 1 && document.querySelector(targetId)) {
+                        e.preventDefault();
                         document.querySelector(targetId).scrollIntoView({
-                            behavior: 'smooth'
+                            behavior: 'smooth',
+                            block: 'start'
                         });
                     }
                 });
@@ -1774,7 +2416,7 @@ jobs:
             }
 
             // Store encrypted API key
-            const encryptedApiKey = encryptApiKey('AIzaSyAbDGcjmDytNze-G9UQe4sSr9u-GfG0er4');
+            const encryptedApiKey = encryptApiKey('AIzaSyB4h4sj1V8m0uXtO4TT2mc_60-D1qDpfmc');
 
             async function getBotResponse(question) {
                 try {
@@ -1790,9 +2432,9 @@ jobs:
                             contents: [{
                                 parts: [{
                                     text: `You are a DevOps expert chatbot named Botty. 
-                                          Provide a concise, friendly response about: ${question}
-                                          Focus on DevOps topics like Docker, Kubernetes, CI/CD, and cloud technologies.
-                                          Keep responses under 150 words and use simple language.`
+                                            Provide a concise, friendly response about: ${question}
+                                            Focus on DevOps topics like Docker, Kubernetes, CI/CD, and cloud technologies.
+                                            Keep responses under 150 words and use simple language.`
                                 }]
                             }]
                         })
@@ -1855,6 +2497,101 @@ jobs:
                     sendMessage();
                 }
             });
+
+            // Linux Command Simulator Logic
+            const terminalInput = document.getElementById('terminal-input');
+            const terminalBody = document.getElementById('terminal-body');
+            const fileSystem = {
+                '/home/devops': ['README.md', 'app/'],
+                '/home/devops/app': ['index.js', 'package.json']
+            };
+            let currentPath = '/home/devops';
+
+            function printToTerminal(text, isCommand = false) {
+                const line = document.createElement('pre');
+                if (isCommand) {
+                    line.innerHTML = `<span class="terminal-prompt" style="color: var(--primary-color);">user@devops:~$</span> ${text}`;
+                } else {
+                    line.textContent = text;
+                }
+                terminalBody.insertBefore(line, terminalBody.querySelector('.terminal-input-line'));
+                terminalBody.scrollTop = terminalBody.scrollHeight;
+            }
+
+            terminalInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const command = terminalInput.value.trim();
+                    printToTerminal(command, true);
+                    terminalInput.value = '';
+
+                    const [cmd, ...args] = command.split(' ');
+
+                    switch (cmd) {
+                        case 'help':
+                            printToTerminal('Available commands: help, ls, pwd, echo, clear');
+                            break;
+                        case 'ls':
+                            printToTerminal(fileSystem[currentPath].join('  '));
+                            break;
+                        case 'pwd':
+                            printToTerminal(currentPath);
+                            break;
+                        case 'echo':
+                            printToTerminal(args.join(' '));
+                            break;
+                        case 'clear':
+                            const inputLine = terminalBody.querySelector('.terminal-input-line');
+                            terminalBody.innerHTML = '';
+                            terminalBody.appendChild(inputLine);
+                            break;
+                        case 'cd':
+                            if (args[0] === 'app' && currentPath === '/home/devops') {
+                                currentPath = '/home/devops/app';
+                            } else if (args[0] === '..' && currentPath === '/home/devops/app') {
+                                currentPath = '/home/devops';
+                            } else {
+                                printToTerminal(`cd: no such file or directory: ${args[0]}`);
+                            }
+                            terminalBody.querySelector('.terminal-prompt').textContent = `user@devops:${currentPath.replace('/home/devops', '~')}$`;
+                            break;
+                        default:
+                            if (command) printToTerminal(`command not found: ${command}`);
+                            break;
+                    }
+                }
+            });
+
+            // Cloud Cost Estimator Logic
+            const serversSlider = document.getElementById('servers');
+            const storageSlider = document.getElementById('storage');
+            const bandwidthSlider = document.getElementById('bandwidth');
+
+            const serversOutput = document.getElementById('servers-output');
+            const storageOutput = document.getElementById('storage-output');
+            const bandwidthOutput = document.getElementById('bandwidth-output');
+            const totalCostOutput = document.getElementById('total-cost-output');
+
+            const costFactors = {
+                server: 10,  // $10 per server/instance
+                storage: 0.1, // $0.10 per GB of storage
+                bandwidth: 0.05 // $0.05 per GB of bandwidth
+            };
+
+            function calculateCost() {
+                const numServers = parseInt(serversSlider.value, 10);
+                const gbStorage = parseInt(storageSlider.value, 10);
+                const gbBandwidth = parseInt(bandwidthSlider.value, 10);
+
+                serversOutput.textContent = numServers;
+                storageOutput.textContent = `${gbStorage} GB`;
+                bandwidthOutput.textContent = `${gbBandwidth} GB`;
+
+                const totalCost = (numServers * costFactors.server) + (gbStorage * costFactors.storage) + (gbBandwidth * costFactors.bandwidth);
+                totalCostOutput.textContent = `$${totalCost.toFixed(2)}`;
+            }
+
+            [serversSlider, storageSlider, bandwidthSlider].forEach(slider => slider.addEventListener('input', calculateCost));
+            calculateCost(); // Initial calculation
 
             quizButton.addEventListener('click', showQuizModal);
             quizCloseBtn.addEventListener('click', hideQuizModal);
